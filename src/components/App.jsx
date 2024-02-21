@@ -78,7 +78,7 @@ function App() {
   }, []);
 
   return (
-    <AppContext.Provider value={{ isLoggedIn }}>
+    <AppContext.Provider value={{ isLoggedIn, setIsLoggedIn }}>
       <Routes>
         <Route
           path="/"
@@ -95,7 +95,7 @@ function App() {
           path="/ducks"
           element={
             <ProtectedRoute isLoggedIn={isLoggedIn}>
-              <Ducks setIsLoggedIn={setIsLoggedIn} />
+              <Ducks />
             </ProtectedRoute>
           }
         />
@@ -104,7 +104,7 @@ function App() {
           path="/my-profile"
           element={
             <ProtectedRoute isLoggedIn={isLoggedIn}>
-              <MyProfile userData={userData} setIsLoggedIn={setIsLoggedIn} />
+              <MyProfile userData={userData} />
             </ProtectedRoute>
           }
         />
