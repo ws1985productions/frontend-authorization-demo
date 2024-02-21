@@ -7,6 +7,7 @@ import {
   useLocation,
 } from "react-router-dom";
 
+import AppContext from "../contexts/AppContext";
 import Ducks from "./Ducks";
 import Login from "./Login";
 import MyProfile from "./MyProfile";
@@ -77,52 +78,54 @@ function App() {
   }, []);
 
   return (
-    <Routes>
-      <Route
-        path="/"
-        element={
-          isLoggedIn ? (
-            <Navigate to="/ducks" replace />
-          ) : (
-            <Navigate to="/login" replace />
-          )
-        }
-      />
+    <AppContext.Provider value={{ isLoggedIn }}>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            isLoggedIn ? (
+              <Navigate to="/ducks" replace />
+            ) : (
+              <Navigate to="/login" replace />
+            )
+          }
+        />
 
-      <Route
-        path="/ducks"
-        element={
-          <ProtectedRoute isLoggedIn={isLoggedIn}>
-            <Ducks setIsLoggedIn={setIsLoggedIn} />
-          </ProtectedRoute>
-        }
-      />
+        <Route
+          path="/ducks"
+          element={
+            <ProtectedRoute isLoggedIn={isLoggedIn}>
+              <Ducks setIsLoggedIn={setIsLoggedIn} />
+            </ProtectedRoute>
+          }
+        />
 
-      <Route
-        path="/my-profile"
-        element={
-          <ProtectedRoute isLoggedIn={isLoggedIn}>
-            <MyProfile userData={userData} setIsLoggedIn={setIsLoggedIn} />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/login"
-        element={
-          <div className="loginContainer">
-            <Login handleLogin={handleLogin} />
-          </div>
-        }
-      />
-      <Route
-        path="/register"
-        element={
-          <div className="registerContainer">
-            <Register handleRegistration={handleRegistration} />
-          </div>
-        }
-      />
-    </Routes>
+        <Route
+          path="/my-profile"
+          element={
+            <ProtectedRoute isLoggedIn={isLoggedIn}>
+              <MyProfile userData={userData} setIsLoggedIn={setIsLoggedIn} />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/login"
+          element={
+            <div className="loginContainer">
+              <Login handleLogin={handleLogin} />
+            </div>
+          }
+        />
+        <Route
+          path="/register"
+          element={
+            <div className="registerContainer">
+              <Register handleRegistration={handleRegistration} />
+            </div>
+          }
+        />
+      </Routes>
+    </AppContext.Provider>
   );
 }
 
