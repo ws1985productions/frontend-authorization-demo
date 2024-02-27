@@ -3,7 +3,7 @@ import data from "../utils/data";
 import "./styles/DuckList.css";
 
 function DuckList() {
-  let { ducks } = data;
+  const { ducks } = data;
   return (
     <div className="duck-list">
       {ducks.map((duck) => {

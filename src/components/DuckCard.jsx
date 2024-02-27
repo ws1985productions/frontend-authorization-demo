@@ -1,7 +1,7 @@
 import "./styles/DuckCard.css";
 
 function DuckCard(props) {
-  let { duck } = props;
+  const { duck } = props;
   return (
     <div className="duck-card">
       <div className="duck-card__image">
