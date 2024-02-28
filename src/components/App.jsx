@@ -9,20 +9,9 @@ import ProtectedRoute from "./ProtectedRoute";
 import "./styles/App.css";
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
   return (
     <Routes>
-      <Route
-        path="/"
-        element={
-          isLoggedIn ? (
-            <Navigate to="/ducks" replace />
-          ) : (
-            <Navigate to="/login" replace />
-          )
-        }
-      />
-
       <Route
         path="/ducks"
         element={
@@ -54,6 +43,16 @@ function App() {
           <div className="registerContainer">
             <Register />
           </div>
+        }
+      />
+      <Route
+        path="*"
+        element={
+          isLoggedIn ? (
+            <Navigate to="/ducks" replace />
+          ) : (
+            <Navigate to="/login" replace />
+          )
         }
       />
     </Routes>
