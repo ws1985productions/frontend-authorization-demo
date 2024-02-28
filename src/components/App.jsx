@@ -73,17 +73,6 @@ function App() {
   return (
     <Routes>
       <Route
-        path="/"
-        element={
-          isLoggedIn ? (
-            <Navigate to="/ducks" replace />
-          ) : (
-            <Navigate to="/login" replace />
-          )
-        }
-      />
-
-      <Route
         path="/ducks"
         element={
           <ProtectedRoute isLoggedIn={isLoggedIn}>
@@ -114,6 +103,16 @@ function App() {
           <div className="registerContainer">
             <Register handleRegistration={handleRegistration} />
           </div>
+        }
+      />
+      <Route
+        path="*"
+        element={
+          isLoggedIn ? (
+            <Navigate to="/ducks" replace />
+          ) : (
+            <Navigate to="/login" replace />
+          )
         }
       />
     </Routes>
