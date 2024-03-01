@@ -72,7 +72,6 @@ function App() {
       .then(({ username, email }) => {
         setIsLoggedIn(true);
         setUserData({ username, email });
-        navigate(location.pathname);
       })
       .catch(console.error);
   }, []);
@@ -81,20 +80,9 @@ function App() {
     <AppContext.Provider value={{ isLoggedIn, setIsLoggedIn }}>
       <Routes>
         <Route
-          path="/"
-          element={
-            isLoggedIn ? (
-              <Navigate to="/ducks" replace />
-            ) : (
-              <Navigate to="/login" replace />
-            )
-          }
-        />
-
-        <Route
           path="/ducks"
           element={
-            <ProtectedRoute isLoggedIn={isLoggedIn}>
+            <ProtectedRoute>
               <Ducks />
             </ProtectedRoute>
           }
@@ -103,7 +91,7 @@ function App() {
         <Route
           path="/my-profile"
           element={
-            <ProtectedRoute isLoggedIn={isLoggedIn}>
+            <ProtectedRoute>
               <MyProfile userData={userData} />
             </ProtectedRoute>
           }
@@ -111,17 +99,33 @@ function App() {
         <Route
           path="/login"
           element={
-            <div className="loginContainer">
-              <Login handleLogin={handleLogin} />
-            </div>
+            <ProtectedRoute anonymous>
+              <div className="loginContainer">
+                <Login handleLogin={handleLogin} />
+              </div>
+            </ProtectedRoute>
           }
         />
+
         <Route
           path="/register"
           element={
-            <div className="registerContainer">
-              <Register handleRegistration={handleRegistration} />
-            </div>
+            <ProtectedRoute anonymous>
+              <div className="registerContainer">
+                <Register handleRegistration={handleRegistration} />
+              </div>
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="*"
+          element={
+            isLoggedIn ? (
+              <Navigate to="/ducks" replace />
+            ) : (
+              <Navigate to="/login" replace />
+            )
           }
         />
       </Routes>
